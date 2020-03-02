@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './code.css';
-import path from './question.js'
-import path1 from './template.js'
-import path2 from './total.js'
 import {LiveProvider, LiveEditor, LivePreview} from 'react-live'
+import axios from 'axios';
+
 var chai = require('chai');
+
+
+
 
 var start = ''
 var end = ''
@@ -71,39 +73,54 @@ function updateScript(data){
 }
 
 class practiceCode extends Component {
-    render(){
-        const question = path
-        const template = path1
-        const total ="Total Number Solved: "+ path2
-        return (
-            <div>
-                <div id='startButton' className='startButton'>
-                    <button onClick={()=>startCoding()} >Start Coding</button><br/><br/>
-                    <label id='result'>
-
-                    </label>
-                </div>
-                <div id='wholeContent' className='wholeContent'>
-                    <div className='code' id='code'>
-                        <label className='questionText'>
-                            {question}
-                            <label id='testCase'>
-                            </label>
-                        </label>
-                        <LiveProvider code={template} id='codeText' className='codeText'>
-                            <LiveEditor onChange={(data)=>updateScript(data)} id='codeEditor'/>
-                            <LivePreview />
-                        </LiveProvider>
-                    </div>
-                    <div className='submit' id='submit'>
-                        <button onClick={()=>startCoding()} className='submit' id='submit'>Finish</button>
-                        <button onClick={()=>getAnswer()} className='submit' id='submit'>Run</button>
-                    </div>
-                    <label className='totalCount'>{total}</label>
-                </div>
-            </div>
-          );
+    constructor(props){
+        super(props)
+        this.state = {
+            data : []
         }
     }
-  
+    componentDidMount() {
+        axios.get('http://localhost:5000/users',{ crossdomain: true })
+          .then(res => res.data)
+          .then((data)=>{
+            this.setState({data : data})  
+          })
+      }
+    render(){
+        if(this.state.data.length===0) return <div>Loading</div>
+        else{
+            const question = this.state.data[0]['questions']
+            const template = this.state.data[0]['template']
+            const total ="Total Number Solved: "+ this.state.data[0]['total_tries']
+            return (
+                <div>
+                    <div id='startButton' className='startButton'>
+                        <button onClick={()=>startCoding()} >Start Coding</button><br/><br/>
+                        <label id='result'>
+
+                        </label>
+                    </div>
+                    <div id='wholeContent' className='wholeContent'>
+                        <div className='code' id='code'>
+                            <label className='questionText'>
+                                {question}
+                                <label id='testCase'>
+                                </label>
+                            </label>
+                            <LiveProvider code={template} id='codeText' className='codeText'>
+                                <LiveEditor onChange={(data)=>updateScript(data)} id='codeEditor'/>
+                                <LivePreview />
+                            </LiveProvider>
+                        </div>
+                        <div className='submit' id='submit'>
+                            <button onClick={()=>startCoding()} className='submit' id='submit'>Finish</button>
+                            <button onClick={()=>getAnswer()} className='submit' id='submit'>Run</button>
+                        </div>
+                        <label className='totalCount'>{total}</label>
+                    </div>
+                </div>
+                );
+            }
+        }
+    }
 export default practiceCode;
