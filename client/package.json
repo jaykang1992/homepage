@@ -1,0 +1,56 @@
+{
+  "homepage": "http://jaykang1992.github.io/homepage",
+  "name": "homepage",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "apollo-server": "^2.10.1",
+    "apollo-server-express": "^2.10.1",
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "graphql": "^14.6.0",
+    "helmet": "^3.21.3",
+    "http-proxy-middleware": "^1.0.1",
+    "pg": "^7.18.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-live": "^2.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
+    "react-simple-code-editor": "^0.11.0",
+    "react-syntax-highlighter": "^12.2.1"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "gh-pages": "^2.2.0",
+    "mocha": "^7.1.0"
+  },
+  "proxy": "http://localhost:5000/"
+}
